@@ -3,4 +3,4 @@
 .RData
 .Ruserdata
 .DS_Store
-Data/Healthcare/ShinyTestApps/ShinyPrototype.R
+Data/FitBit/GetFitBitData.R
