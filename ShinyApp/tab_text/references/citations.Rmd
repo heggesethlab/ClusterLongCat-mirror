@@ -1,6 +1,0 @@
----
-title: ''
-output: html_fragment
-bibliography: ../../Library.bib
-nocite: '@*'
----

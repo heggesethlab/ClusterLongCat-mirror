@@ -4,7 +4,7 @@ This shiny app is designed as a tool for comparing methods for clustering longit
 
 ## Getting Started
 
-A pared down version of our project can be found on our [shinyapps.io page](). The full version should be run locally due to the computational complexity of performing clusterings.
+A pared down version of our project can be found on our [shinyapps.io page](https://heggesethlab.shinyapps.io/ShinyApp/). The full version should be run locally due to the computational complexity of performing clusterings.
 
 ### Prerequisites  
 

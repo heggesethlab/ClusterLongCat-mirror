@@ -46,8 +46,8 @@ source("tab_modules/references.R")
 
 
 # prepping the data for use
-tempSleepData <- read.csv("data_subset/sleep_data_subset.csv")
-tempHealthData <- read.csv("data_subset/health_data_subset.csv")
+tempSleepData <- read.csv("data/sleep_data_subset.csv")
+tempHealthData <- read.csv("data/health_data_subset.csv")
 
 supplied_data_sets_nr <- list(health_data = tempHealthData, sleep_data = tempSleepData)
 
