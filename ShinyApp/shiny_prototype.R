@@ -30,7 +30,7 @@ library(purrr)
 
 
 # loading helper functions
-source('helper_functions/shiny_bios.R')
+source('tab_text/about_us/shiny_bios.R')
 source("helper_functions/shiny_viz.R")
 source("helper_functions/shiny_functions.R")
 
