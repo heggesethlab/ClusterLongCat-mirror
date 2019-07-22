@@ -18,6 +18,14 @@ library(htmlTable)
 library(shinybusy)
 library(seriation)
 library(abind)
+library(TraMineR)
+library(scales)
+library(seqHMM)
+library(stringr)
+library(partitionComparison)
+library(data.table)
+library(viridis)
+library(purrr)
 
 
 
@@ -27,6 +35,7 @@ source("helper_functions/shiny_viz.R")
 source("helper_functions/shiny_functions.R")
 
 # loading modules
+source("tab_modules/clustering_helper_modules.R")
 source("tab_modules/overview_tab.R")
 source("tab_modules/one_clustering_tab.R")
 source("tab_modules/two_clustering_tab.R")

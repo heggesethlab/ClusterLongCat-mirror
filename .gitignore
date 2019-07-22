@@ -1,7 +1,13 @@
+# ignores data accidently made by R studio
 *.Rproj.user
 *.Rhistory
 *.Ruserdata
 *.DS_Store
 *.Rapp.history
+
+# keep sleep secret
 Data/FitBit/PersonalData/
+
+# ignore data from MMMs
+**/temp_outfiles
 **/tempOutfiles

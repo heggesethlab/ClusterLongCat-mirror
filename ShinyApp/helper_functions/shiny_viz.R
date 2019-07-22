@@ -1,11 +1,3 @@
-library(tidyr)
-library(dplyr)
-library(ggplot2)
-library(viridis)
-library(dendextend)
-library(igraph)
-library(purrr)
-
 # A function to visualize number of IDs by cluster (proportion or stacked bar)
 plot_num_ids <- function(input) {
   input <- input

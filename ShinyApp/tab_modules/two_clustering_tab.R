@@ -1,8 +1,4 @@
 # Module for two clustering tab
-
-
-source("tab_modules/clustering_helper_modules.R")
-
 twoClusteringTabUI <- function(id) {
   ns <- NS(id)
   tagList(

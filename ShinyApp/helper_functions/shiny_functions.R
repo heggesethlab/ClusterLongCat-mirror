@@ -8,30 +8,12 @@ library(stringr)
 library(partitionComparison)
 library(data.table)
 
-###### REFERENCES ######
-#A function to make a symmetric function out of a lower triangular matrix
+# A function to make a symmetric function out of a lower triangular matrix
 makeSymm <- function(m) {
   m[upper.tri(m)] <- t(m)[upper.tri(m)]
   return(m)
 }
 
-# A function to make each row a (Day, ID) pair
-data_to_daily <- function(data){
-  # grabs a random sample (without replacement) and makes it so each row is a (day, id) pair
-  duration_joiner <- tibble(
-    order = rep(data$order, data$Duration),
-    ID = rep(data$ID, data$Duration)
-  )
-
-  data_long <- data %>%
-    full_join(duration.joiner, by = c("ID", "order")) %>%
-    group_by(ID) %>%
-    mutate(time = 1:n()) %>%
-    ungroup()
-
-  return(data_long)
-}
-#######################
 
 #' Formats the healthcare utilization data 
 #'

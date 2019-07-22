@@ -1,5 +1,4 @@
 # Module for one cluster stuff
-source("tab_modules/clustering_helper_modules.R")
 oneClusteringTabUI <- function(id){
   ns <- NS(id)
   tagList(
