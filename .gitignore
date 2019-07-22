@@ -1,7 +1,7 @@
-.Rproj.user
-.Rhistory
-.RData
-.Ruserdata
-.DS_Store
+*.Rproj.user
+*.Rhistory
+*.Ruserdata
+*.DS_Store
+*.Rapp.history
 Data/FitBit/PersonalData/
 **/tempOutfiles
