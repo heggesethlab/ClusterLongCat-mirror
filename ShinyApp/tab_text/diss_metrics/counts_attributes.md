@@ -1,0 +1,3 @@
+The dissimilarity between two sequences can be measured by the number of common attributes $A(x,y)$ shared between sequences. A larger value of $A(x,y)$ implies that the sequences are closer together. Potential attributes $A(x,y)$ one could use to measure proximity are the length of the **longest common subsequence (LCS)** and the number of matching sequences (NMS). We choose to implement LCS in the Shiny app out of computational efficiency concerns.
+
+It is important to note, transformations and/or scaling are usually required to compare similarity and dissimilarity measures.

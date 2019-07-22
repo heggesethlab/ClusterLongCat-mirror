@@ -1,0 +1,38 @@
+---
+title: ""
+output: html_fragment
+---
+
+<style>
+  table {
+    display: block;
+    font-size: 100%;
+    overflow: auto;
+    width: auto;
+  }
+  table{
+    border-collapse: collapse;
+  }
+  table, th, td{
+      border: 1px solid black;
+  }
+  th {
+    color: black;
+    font-weight: normal;
+    padding: 20px 30px;
+    text-align: center;
+  }
+  td {
+    color: black;
+    padding: 20px 30px;
+  }
+</style>
+
+| Method                                     	| Description                                                                                                                                             	| Pros                                                                                                                                                                                     	| Cons                                                                                                                                                                                                                                                    	|
+|--------------------------------------------	|---------------------------------------------------------------------------------------------------------------------------------------------------------	|------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------	|---------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------	|
+| Chi-squared Distance                       	| Chi-squared weights the squared differences for each state by the inverse of the overall proportion of time spent in the state                          	| Sensitive to time spent in the states; gives more importance to a rare state than to a frequent state                                                                                    	| Insensitive to the order and the exact timing of the states                                                                                                                                                                                             	|
+| Longest Common Susbsequence                	| LCS corresponds to the number of elements in one sequence that can be uniquely matched with elements occurring in the same order in the other sequence  	| Stronger dependence on differences in the state distribution and the sequencing, especially the order of the most frequent states                                                        	| Not too sensitive to timing; less dependence on differences in the consecutive times spent in the distinct states                                                                                                                                       	|
+| Gower Distance                             	| An equal-weighted sum of position-wise mismatches between two categorical sequences over a common time period                                           	| Can be used for sequences of unequal length                                                                                                                                              	| Very sensitive to timing mismatches; when sequences are unequal length, it only compares sequences on the common time period                                                                                                                            	|
+| Generalized Hamming Distance               	| A weighted sum of position-wise mismatches between two sequences where weights are state-specific                                                       	| Intuitive                                                                                                                                                                                	| Only applies to pairs of sequences of the same length; very sensitive to timing mismatches and shifting of sequences                                                                                                                                    	|
+| Optimal Matching                           	| A weighted sum of time shifts (indels) and a weighted sum of the mismatches (substitutions) after the time shifts                                       	| Indel costs allow us to control for admissible time warps in a sequence comparison, while substitution costs reflect state dissimilarities serve as weights for the remaining mismatches 	| The lack of sociological meaning of the operations and their costs; indel and substitution costs may not be well-chosen                                                                                                                                 	|
+| Optimal Matching Sensitive to Spell Length 	| A variant of OM that distinguishes two similar states in a spell of different lengths and makes indel and substitution costs depend on the spell length 	| Decrease in indels costs favors indels in longer spells instead of indels which would create or suppress spells                                                                          	| The lack of sociological meaning of the operations and their costs; decrease in substitution costs reverses the effect of encouraging the splitting of long spells, which makes it difficult to predict the sensitivity of the measure to spell lengths 	|
