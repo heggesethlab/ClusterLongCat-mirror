@@ -4,6 +4,7 @@
 
 # some libraries
 library(bayesMCClust)
+library(rmarkdown)
 library(shiny)
 library(ggplot2)
 library(shinydashboard)
@@ -26,7 +27,6 @@ library(partitionComparison)
 library(data.table)
 library(viridis)
 library(purrr)
-
 
 
 # loading helper functions
