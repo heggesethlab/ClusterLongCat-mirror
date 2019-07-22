@@ -282,6 +282,7 @@ plot_mcc_sd_heat_map <- function(input){
 }
 
 plot_mark_chain <- function(input) {
+
   model_type <- input$model_type
   par(mfrow = c(ceiling(input$num_clusts/2), 2))
   par(mar = c(1,0,1,0) + 0.1)
@@ -325,6 +326,7 @@ plot_mark_chain <- function(input) {
                   if(model_type == "MMM") {c(names(transM))} else {sort(unique(input$clustered_data$state))}})(),
                 edge.label = round(transitions, 4),
                 vertex.size = 50,
+                vertex.color = c("#A6CEE3", "#1F78B4", "#B2DF8A", "#33A02C"),
                 edge.arrow.size = .9,
                 main = paste("Cluster", i))
   })
