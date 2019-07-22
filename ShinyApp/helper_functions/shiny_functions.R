@@ -331,7 +331,7 @@ perform_clustering <- function(cluster_method, cluster_params) {
                      # running the model
                       tryCatch(clust_result <- mcClust(
                         Data = list(dataFile = formatted_array,
-                                    storeDir = "tempOutfiles"
+                                    storeDir = "temp_outfiles"
                         ),
                         Prior = list( H = cluster_params$num_clusts, 
                                       e0 = cluster_params$group_size_prior,
@@ -386,7 +386,7 @@ perform_clustering <- function(cluster_method, cluster_params) {
                     # running the model
                     tryCatch(clust_result <- dmClust(
                       Data = list(dataFile = formatted_array,
-                                  storeDir = "tempOutfiles", 
+                                  storeDir = "temp_outfiles", 
                                   mccFile = NULL),
                       Prior = list( H = cluster_params$num_clusts, 
                                     alpha0 = cluster_params$group_size_prior,
