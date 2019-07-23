@@ -1,5 +1,7 @@
 # Clustering Longitudinal Categorical Data
 
+**Note: This is a mirror of the project with sensitive data removed. As such not all the code is represented in the commit history.**
+
 This shiny app is designed as a tool for comparing methods for clustering longitudinal categorical data. It supports doing cluster analysis on such data using a variety of appropriate clustering methods. For each method, it produces visualizations and statistics to help interpret the clustering assignments. We also allow for comparing different clusterings and producing clustering comparison statistics such as the adjusted Rand index. We include two data sets, but users could upload and analyze datasets of their choosing.
 
 ## Getting Started
