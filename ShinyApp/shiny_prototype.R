@@ -27,6 +27,7 @@ library(partitionComparison)
 library(data.table)
 library(viridis)
 library(purrr)
+library(RColorBrewer)
 
 
 # loading helper functions

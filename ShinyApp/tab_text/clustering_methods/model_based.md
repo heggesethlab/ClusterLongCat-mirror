@@ -10,7 +10,7 @@ We provide three methods of modeling data this way: A maximum likelihood estimat
 
 ### Mixture of Markov Models
 
-Using maximum likelihood estimation (MLE) calculated with the expectation maximization (EM) algorithm, the parameters for the models and the cluster assignments of observations are computed. This method works for sequences of variable length, but computational complexity grows quickly for longer sequences and for more states. In order to prevent getting stuck at local minimums on the likelihood surface, we run the EM algorithm with 10 restarts for each model.
+Using maximum likelihood estimation (MLE) calculated with the expectation maximization (EM) algorithm, the parameters for the models and the cluster assignments of observations are computed. (Helske and Helske 2019) This method works for sequences of variable length, but computational complexity grows quickly for longer sequences and for more states. In order to prevent getting stuck at local minimums on the likelihood surface, we run the EM algorithm with 10 restarts for each model.
 
 To support interpreting the results, we create several visualizations for MLE mixtures of Markov models
 
@@ -27,7 +27,7 @@ In light of the rising field of Bayesian statistics, Bayesian clustering methods
 
 ### Mixture of Markov Models
 
-Similar to the Mixture of Markov Models using MLE, the Bayesian inference method also assumes that each member of a cluster can be modeled by a cluster specific transition matrix. It is assumed that the rows of this matrix are independent are that each row is modeled by a Dirichlet distribution, and that this underlying distribution is identical for all clusters. Our app supports setting the 2 values for priors. The parameters of the Dirichlet distributions corresponding to on diagonal entries in the transition matrices and those corresponding to off diagonal entries. Parameters of this distribution are estimated using Markov chain Monte Carlo (MCMC). (Pamminger and Frühwirth-Schnatter 2010)
+Similar to the Mixture of Markov Models using MLE, the Bayesian inference method also assumes that each member of a cluster can be modeled by a cluster specific transition matrix. It is assumed that the rows of this matrix are independent are that each row is modeled by a Dirichlet distribution, and that this underlying distribution is identical for all clusters. Notably, this method's complexity grows much more slowly for longer length sequences, and is recommended when performing clusterings on the uncompressed data.  Our app supports setting the 2 values for priors. The parameters of the Dirichlet distributions corresponding to on diagonal entries in the transition matrices and those corresponding to off diagonal entries. Parameters of this distribution are estimated using Markov chain Monte Carlo (MCMC). (Pamminger and Frühwirth-Schnatter 2010)
 
 To support interpreting the results, we create several visualizations for Bayesian estimated mixture of Markov models:
 

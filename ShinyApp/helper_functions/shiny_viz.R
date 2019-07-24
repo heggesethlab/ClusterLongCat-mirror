@@ -1,16 +1,22 @@
-# A function to visualize number of IDs by cluster (proportion or stacked bar)
+#brewer.pal(4, 'Paired')
+#brewer.pal(3, 'Set3')
+
+  # A function to visualize number of IDs by cluster (proportion or stacked bar)
 plot_num_ids <- function(input) {
-  input <- input
+  input <<- input
   num_ids_data <- input$clustered_data %>%
     group_by(cluster) %>%
     summarize(num_ids = n_distinct(ID), prop_num_ids = num_ids / length(unique(input$clustered_data$ID)))
-
+  
+  K <- length(unique(input$clustered_data$cluster))
+  CPAL <- brewer.pal(K, 'Set3')
+  
   num_ids_plot <- num_ids_data %>%
     ggplot() +
-    geom_col(aes(x = cluster, y = prop_num_ids), show.legend = FALSE) +
+    geom_col(aes(x = cluster, y = prop_num_ids, fill = cluster), show.legend = FALSE) +
     ylim(0, 1) +
     labs(title = "Cluster Distribution", x = "Cluster", y = "Proportion") +
-    #scale_fill_viridis_d(option = "C") +
+    scale_fill_manual(name= 'Cluster', values = CPAL) +
     theme_minimal()
 
   return(num_ids_plot)
@@ -18,6 +24,8 @@ plot_num_ids <- function(input) {
 
 # A function to visualize state distribution by cluster
 plot_state_dist <- function(input) { 
+  Nstates <- length(unique(input$clustered_data$state))
+  PAL <- brewer.pal(Nstates, 'Paired')
   state_dist_plot <- input$clustered_data %>%
     group_by(cluster,state) %>%
     summarize(duration = sum(duration)) %>%
@@ -28,7 +36,7 @@ plot_state_dist <- function(input) {
     ggplot() +
     geom_bar(aes(x = cluster, fill = state,y = prop), stat='identity') +
     labs(title = "State Distribution", x = "Cluster", y = "Proportion") +
-    scale_fill_manual(name = "State", values = c("#A6CEE3", "#1F78B4", "#B2DF8A", "#33A02C")) +
+    scale_fill_manual(name = "State", values =PAL) +
     theme_minimal()
 
   return(state_dist_plot)
@@ -43,11 +51,14 @@ plot_total_duration <- function(input) {
     group_by(cluster, ID) %>%
     summarize(total_duration = sum(duration))
 
+  K <- length(unique(input$clustered_data$cluster))
+  CPAL <- brewer.pal(K, 'Set3')
+  
   total_duration_plot <- total_duration_data %>%
     ggplot() +
     geom_boxplot(aes(x = cluster, y = total_duration, fill = cluster), show.legend = FALSE) +
     labs(title = "Total Duration Distribution", x = "Cluster", y = "Duration") +
-    scale_fill_viridis_d(option = "C") +
+    scale_fill_manual(name = 'Cluster', values = CPAL) +
     theme_minimal()
 
   return(total_duration_plot)
@@ -67,11 +78,14 @@ plot_avg_state_duration <- function(input,format=NULL) {
     group_by(cluster, state) %>%
     summarize(avg_state_duration = mean(duration))
   
+  Nstates <- length(unique(input$clustered_data$state))
+  PAL <- brewer.pal(Nstates, 'Paired')
+  
   avg_state_duration_plot <- avg_state_duration_data %>%
     ggplot() +
     geom_col(aes(x = cluster, y = avg_state_duration, fill = state), position = "dodge") +
     labs(title = "Average Duration By State", x = "Cluster", y = "Duration") +
-    scale_fill_manual(name = "State", values = c("#A6CEE3", "#1F78B4", "#B2DF8A", "#33A02C")) +
+    scale_fill_manual(name = "State", values = PAL) +
     theme_minimal()
   
   return(avg_state_duration_plot)
@@ -83,12 +97,13 @@ plot_avg_num_spells <- function(input) {
     add_count(cluster, state) %>%
     group_by(cluster) %>%
     mutate(num_ids = n_distinct(ID), avg_num_trans = n/num_ids)
-
+Nstates <- length(unique(input$clustered_data$state))
+PAL <- brewer.pal(Nstates, 'Paired')
   avg_num_trans_plot <- avg_num_trans_data %>%
     ggplot() +
     geom_col(aes(x = cluster, y = avg_num_trans, fill = state), position = "dodge") +
     labs(title = "Average Count of Spells By State", x = "Cluster", y = "Count of Spells") +
-    scale_fill_manual(name = "State", values = c("#A6CEE3", "#1F78B4", "#B2DF8A", "#33A02C")) +
+    scale_fill_manual(name = "State", values = PAL) +
     theme_minimal()
 
   return(avg_num_trans_plot)
@@ -110,7 +125,8 @@ plot_sample_traj <- function(input,format=NULL) {
     unique() %>% 
     count(cluster) %>% 
     mutate(n = pmin(n, 5))
-  
+  Nstates <- length(unique(input$clustered_data$state))
+  PAL <- brewer.pal(Nstates, 'Paired')
 
   K <- length(levels(data$cluster))
   data %>%
@@ -128,7 +144,7 @@ plot_sample_traj <- function(input,format=NULL) {
     geom_rect(aes(fill = state),color='darkgrey') + 
     facet_grid(~cluster2) +
     labs(title = "Sample Sequence Trajectories", x = "Time") +
-    scale_fill_manual(name = "State", values = c("#A6CEE3", "#1F78B4", "#B2DF8A", "#33A02C")) +
+    scale_fill_manual(name = "State", values = PAL) +
     theme_minimal()+
     theme(axis.text.y=element_blank(),
     axis.ticks=element_blank()) 
@@ -144,18 +160,21 @@ plot_prop_time <- function(input,format=NULL) {
     longdat <- data_to_long(input$clustered_data,format)
     tmp_full <- as.data.frame(expand.grid(unique(longdat$time), unique(longdat$state),unique(longdat$cluster)))
     names(tmp_full) <- c('time','state','cluster')
-  
+    Nstates <- length(unique(input$clustered_data$state))
+    PAL <- brewer.pal(Nstates, 'Paired')
+    
     plot_prop_time <- longdat %>%
     count(cluster,time,state) %>%
     left_join(tmp_full,.) %>%
     mutate(n = ifelse(is.na(n), 0, n)) %>%
     group_by(cluster,time) %>%
     mutate(relfreq = n/sum(n)) %>%
-    ggplot(aes(x = factor(time), y = relfreq, fill = state)) + 
+    ggplot(aes(x = factor(time), y = relfreq, fill = state, color = state)) + 
     geom_bar(stat='identity',width=1) + 
     facet_grid(~cluster) +
     labs(title = "State Distribution over Time", x = "Time",y = 'Proportion') +
-    scale_fill_manual(name = "State", values = c("#A6CEE3", "#1F78B4", "#B2DF8A", "#33A02C")) +
+    scale_fill_manual(name = "State", values = PAL) +
+    scale_color_manual(values = PAL, guide = "none") +
     theme_minimal()+
     theme(axis.text.x=element_blank(),
       axis.ticks=element_blank()) 
@@ -170,7 +189,10 @@ plot_prop_time <- function(input,format=NULL) {
 
 # A function to visualize dendrogram for hierarchical clustering
 plot_dendro <- function(input) {
-  dend <- as.dendrogram(input$cluster_output) %>% dendextend::set("branches_k_color", k = input$num_clusts)
+  K <- length(unique(input$clustered_data$cluster))
+  CPAL <- brewer.pal(K, 'Set3')
+  
+  dend <- as.dendrogram(input$cluster_output) %>% dendextend::set("branches_k_color", k = input$num_clusts, value = CPAL)
   dend <- plot(dend, leaflab = "none")
   
   return(dend)
@@ -315,7 +337,8 @@ plot_mark_chain <- function(input) {
         max(transM)
       })))
     }
-    
+    Nstates <- length(unique(input$clustered_data$state))
+    PAL <- brewer.pal(Nstates, 'Paired')
     
     g1 <<- graph.adjacency(transM > 0, mode = "directed")
     glayout <- layout_in_circle(g1)
@@ -326,7 +349,7 @@ plot_mark_chain <- function(input) {
                   if(model_type == "MMM") {c(names(transM))} else {sort(unique(input$clustered_data$state))}})(),
                 edge.label = round(transitions, 4),
                 vertex.size = 50,
-                vertex.color = c("#A6CEE3", "#1F78B4", "#B2DF8A", "#33A02C"),
+                vertex.color = PAL,
                 edge.arrow.size = .9,
                 main = paste("Cluster", i))
   })
@@ -389,6 +412,9 @@ plot_group_size_trace <- function(input) {
     
   }
   
+  K <- length(unique(input$clustered_data$cluster))
+  CPAL <- brewer.pal(K, 'Set3')
+  
   melt(eta_m) %>%  
     ggplot() +
     geom_line(aes(x = iteration, y = value, color = as.character(cluster))) +
@@ -396,7 +422,7 @@ plot_group_size_trace <- function(input) {
     xlab("Iteration") +
     ggtitle("Trace Plot of Estimated Cluster Sizes") +
     theme_minimal() +
-    scale_color_discrete(name= "Cluster")
+    scale_color_manual(name= "Cluster",values = CPAL)
 
 }
 
@@ -415,12 +441,15 @@ plot_diag_trace <- function(input) {
                               cluster = 1:dim(ksi_arr)[4])
   }
   
+  Nstates <- length(unique(input$clustered_data$state))
+  PAL <- brewer.pal(Nstates, 'Paired')
+  
   melt(ksi_arr) %>% 
     filter(from == to) %>% 
     ggplot(aes(x = iteration, y = value, color = from)) +
     geom_line() +
     facet_wrap(~cluster) +
-    scale_color_discrete(name = "Diagonal") +
+    scale_color_manual(name = "Diagonal",values = PAL) +
     theme_minimal() +
     ggtitle("Trace Plot of Estimated Diagonal Entries of Transition Matrices")
 }
@@ -431,13 +460,15 @@ plot_group_het_trace <- function(input) {
                             to = sort(unique(input$clustered_data$state)),
                             cluster = 1:dim(e_array)[3],
                             iteration = 1:dim(e_array)[4])
+  Nstates <- length(unique(input$clustered_data$state))
+  PAL <- brewer.pal(Nstates, 'Paired')
   
   melt(e_array) %>% 
     filter(from == to) %>% 
     ggplot(aes(x = iteration, y = value, color = from)) +
     geom_line() +
     facet_wrap(~cluster) +
-    scale_color_discrete(name = "Diagonal") +
+    scale_color_manual(name = "Diagonal",values = PAL) +
     theme_minimal() +
     ggtitle("Trace Plot of Estimated Within Group Heterogeneity on Diagonals")
 }
