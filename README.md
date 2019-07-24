@@ -36,7 +36,8 @@ install.packages(c("abind",
                    "stringr",
                    "tidyr",
                    "TraMineR",
-                   "viridis"))
+                   "viridis",
+                   "RColorBrewer"))
 
 install.packages("devtools")
 devtools::install_github("cran/bayesMCClust")
